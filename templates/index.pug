@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Projet waouw
+        script(src=process.env.BROWSER_REFRESH_URL)   
+        style
+            include ../public/css/style.css
+    body
+        h1 Mon super site e-commerce, woaw, quel exploit
+        p c'est bo
+
+        form(action="/form", method="post")
+            p        
+                |    civilite:
+                input(type='text', name='title')
+            p
+                |   nom:
+                input(type='text', name='nom')
+            p
+                |   prenom:
+                input(type='text', name='prenom')
+            p
+                |   email:
+                input(type='email', name='email')
+            p
+                |   password:
+                input(type='password', name='password')
+
+            input(type='submit')
