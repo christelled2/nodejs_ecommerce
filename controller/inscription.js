@@ -3,9 +3,25 @@ module.exports = class inscription {
         res.render('inscription')
     }
 
-    process(req,res) {
+    async process(req,res) {
         var utilisateurModel = require('../model/Model/utilisateurModel.js')
         var utilisateur = new utilisateurModel();
+
+        let formError = null
+
+        let emailExists = await utilisateur.emailExists(req.body.email);
+        if(emailExists) {
+            formError = `Cet email est déjà enregistré dans notre base de données !`
+        }
+        
+        // Si il y a eut une erreur on stop
+        if(formError !== null) {
+            res.render('inscription', {
+                form : req.body,
+                error : formError
+            })
+            return;
+        }
         
         utilisateur.add(
             req.body.civilite, 
@@ -14,6 +30,7 @@ module.exports = class inscription {
             req.body.email, 
             req.body.password
         )
+        req.flash('info', 'Vous vous êtes bien inscrit.');
         res.redirect('/')
     }
 }

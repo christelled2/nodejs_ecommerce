@@ -11,8 +11,19 @@ html(lang="en")
     body
         h1 Mon super site e-commerce, woaw, quel exploit
         p c'est bo
+            if session.user
+                p Bienvenu #{session.user.nom} #{session.user.prenom}
+
+        if messages.info
+            p #{messages.info}
 
         nav
             a(href="/") ACCUEIL
             br
-            a(href="/inscription") INSCRPITION
+            if !session.user
+                a(href="/inscription") INSCRPITION
+                br
+                a(href="/connexion") CONNEXION
+            if session.user
+                br
+                a(href="/deconnexion") DECONNEXION

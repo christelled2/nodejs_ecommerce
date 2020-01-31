@@ -3,6 +3,8 @@ const app = express()
 const config = require('./app/config.js')
 const path = require('path')
 const chalk = require('chalk');
+const session = require('express-session')
+const flash = require('express-flash')
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended: false}))
 
@@ -24,6 +26,16 @@ db.once('open', function () {
 app.set('views',  path.join(__dirname, 'templates'))
 app.set('view engine', 'pug')
 app.use(express.static('/templates/index.pug' || path.join(__dirname, 'public')));
+
+app.use(session({
+    secret: 'keyboard cat', 
+    resave:true, 
+    saveUninitialized:false, 
+    cookie: {maxAge: 3600000} 
+}))
+
+app.use((req,res,next) => {res.locals.session = req.session; next();});
+app.use(flash());
 
 require('./app/route.js')(app)
 
